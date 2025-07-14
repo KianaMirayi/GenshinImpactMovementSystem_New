@@ -22,6 +22,8 @@ namespace GenshinImpactMovementSystem
 
         [field: SerializeField] public PlayerSprintData SprintData { get; private set; }
 
+        [field: SerializeField] public PlayerStopData StopData { get; private set; }
+
 
     }
 }

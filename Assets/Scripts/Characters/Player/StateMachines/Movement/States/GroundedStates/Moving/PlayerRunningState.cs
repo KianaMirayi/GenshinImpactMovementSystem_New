@@ -103,6 +103,11 @@ namespace GenshinImpactMovementSystem
 
         }
 
+        protected override void OnMovementCanceled(InputAction.CallbackContext context)
+        {
+            playerMovementStateMachine.ChangeState(playerMovementStateMachine.MediumStoppingState);
+        }
+
         /*
         protected void OnMovementCanceled(InputAction.CallbackContext context)
         {

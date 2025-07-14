@@ -276,6 +276,23 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.Player.Input.PlayerActions.WalkToggle.started -= OnWalkToggleStarted;
         }
 
+        protected void DecelerateHorizontally()
+        { 
+            Vector3 playerHoriztontalVelocity = GetPlayerHoriztontalVelocity();  //向玩家当前方向的反方向施加力以达到减速的目的
+
+            playerMovementStateMachine.Player.Rigidbody.AddForce(-playerHoriztontalVelocity * playerMovementStateMachine.ReusableData.movementDecelerationForce, ForceMode.Acceleration);  //Acceleration依赖于时间
+        }
+
+        protected bool IsMovingHorizontally(float minMagnitude = 0.1f)
+        {
+            Vector3 playerHorizontalVelocity = GetPlayerHoriztontalVelocity();
+
+            Vector2 playerHorizontalMovement = new Vector2(playerHorizontalVelocity.x, playerHorizontalVelocity.z);
+
+            return playerHorizontalMovement.magnitude < minMagnitude;
+            
+        }
+
         #endregion
 
 

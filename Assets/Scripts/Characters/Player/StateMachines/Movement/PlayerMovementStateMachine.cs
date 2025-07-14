@@ -32,22 +32,31 @@ namespace GenshinImpactMovementSystem
 
         public PlayerSprintingState SprintingState { get; }
 
+        public PlayerLightStoppingState LightStoppingState { get; }
+
+        public PlayerMediumStoppingState MediumStoppingState { get; }
+
+        public PlayerHardStoppingState HardStoppingState { get; }
+
 
         public PlayerMovementStateMachine(Player _player)  //实例化玩家的具体状态
         { 
             Player = _player;
-
             ReusableData = new PlayerStateReusableData();
 
-            IdlingState = new PlayerIdlingState(this);
 
+            IdlingState = new PlayerIdlingState(this);
             dashingState = new PlayerDashingState(this);
 
+
             WalkingState = new PlayerWalkingState(this);
-
             RunningState = new PlayerRunningState(this);
-
             SprintingState = new PlayerSprintingState(this);
+
+
+            LightStoppingState = new PlayerLightStoppingState(this);
+            MediumStoppingState = new PlayerMediumStoppingState(this);
+            HardStoppingState = new PlayerHardStoppingState(this);
 
         }
     }

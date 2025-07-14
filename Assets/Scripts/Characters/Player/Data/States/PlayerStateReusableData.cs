@@ -17,6 +17,8 @@ namespace GenshinImpactMovementSystem
 
         public float movementOnSlopeSpeedModifier { get; set; } = 1f;
 
+        public float movementDecelerationForce { get; set; } = 1f;
+
         public bool shouldWalk { get; set; }
 
 

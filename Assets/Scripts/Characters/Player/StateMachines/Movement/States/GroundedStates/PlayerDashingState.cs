@@ -37,11 +37,10 @@ namespace GenshinImpactMovementSystem
 
         public override void OnAnimationTransitaionEvent()
         {
-            base.OnAnimationTransitaionEvent();
 
             if (playerMovementStateMachine.ReusableData.movementInput == Vector2.zero)
             {
-                playerMovementStateMachine.ChangeState(playerMovementStateMachine.IdlingState); //冲刺后如果没有后续输入的话进入待机状态以及停止状态
+                playerMovementStateMachine.ChangeState(playerMovementStateMachine.HardStoppingState); //冲刺后如果没有后续输入的话进入停止状态
 
                 return;
             }

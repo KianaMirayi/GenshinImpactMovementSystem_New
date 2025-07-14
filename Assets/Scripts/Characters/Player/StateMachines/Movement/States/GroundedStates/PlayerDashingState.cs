@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
+using Unity.XR.OpenVR;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +17,8 @@ namespace GenshinImpactMovementSystem
 
         private int consecutiveDashUsed;  //已冲刺次数
 
+        private bool shouldKeepRotating;
+
         public PlayerDashingState(PlayerMovementStateMachine _playerMovementStateMachine) : base(_playerMovementStateMachine)
         {
             dashData = movementData.DashData;
@@ -28,7 +31,11 @@ namespace GenshinImpactMovementSystem
 
             playerMovementStateMachine.ReusableData.movementSpeedModifier = dashData.DashSpeedModifier;
 
+            playerMovementStateMachine.ReusableData.RotationData = dashData.RotationData;
+
             AddForceOnTransitionFromStationaryState();
+
+            shouldKeepRotating = playerMovementStateMachine.ReusableData.movementInput != Vector2.zero;  //当有任何移动的输入时都应该考虑旋转方向
 
             UpdateConsecutiveDashed();
 
@@ -48,6 +55,27 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.ChangeState(playerMovementStateMachine.SprintingState);  //冲刺后继续前进的话进入疾跑状态
         }
 
+        public override void Exit()
+        {
+            base.Exit();
+
+            SetBaseRotationData();
+        }
+
+        public override void PhysicsUpdate()
+        {
+            base.PhysicsUpdate();
+
+            if (!shouldKeepRotating)
+            {
+                return;
+            }
+
+            RotateTowardsTargetRotation();
+        }
+
+
+
         
 
         #endregion
@@ -65,6 +93,8 @@ namespace GenshinImpactMovementSystem
             Vector3 characterRotationDirection = playerMovementStateMachine.Player.transform.forward;
 
             characterRotationDirection.y = 0f;
+
+            UpdateTargetRotation(characterRotationDirection,false);
 
             playerMovementStateMachine.Player.Rigidbody.velocity = characterRotationDirection * GetMovementSpeed();
         }
@@ -104,6 +134,31 @@ namespace GenshinImpactMovementSystem
         protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
             
+        }
+
+        private void OnMovementPerformed(InputAction.CallbackContext context)
+        {
+            shouldKeepRotating = true;
+        }
+
+        #endregion
+
+        #region Reusable Methods
+
+        protected override void AddInputActionsCallbacks()
+        {
+            base.AddInputActionsCallbacks();
+
+            playerMovementStateMachine.Player.Input.PlayerActions.Movement.performed += OnMovementPerformed;
+        }
+
+        
+
+        protected override void RemoveInputActionsCallbacks()
+        {
+            base.RemoveInputActionsCallbacks();
+
+            playerMovementStateMachine.Player.Input.PlayerActions.Movement.performed -= OnMovementPerformed;
         }
 
         #endregion

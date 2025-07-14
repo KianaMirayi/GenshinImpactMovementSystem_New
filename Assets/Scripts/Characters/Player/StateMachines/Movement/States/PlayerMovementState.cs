@@ -46,8 +46,10 @@ namespace GenshinImpactMovementSystem
 
         private void InitializeData()
         {
-            playerMovementStateMachine.ReusableData.TimeToReachTargetRotation = movementData.baseRotationData.targetRotationReachTime;
+            SetBaseRotationData();
         }
+
+        
 
         #region IState Methods
         public virtual void Enter()  //注意 这些方法是虚方法，子类可以重写它们
@@ -103,9 +105,6 @@ namespace GenshinImpactMovementSystem
 
 
         #endregion
-
-
-
 
 
         #region Main Methods
@@ -291,6 +290,12 @@ namespace GenshinImpactMovementSystem
 
             return playerHorizontalMovement.magnitude < minMagnitude;
             
+        }
+
+        protected void SetBaseRotationData()
+        {
+            playerMovementStateMachine.ReusableData.RotationData = movementData.baseRotationData;
+            playerMovementStateMachine.ReusableData.TimeToReachTargetRotation = playerMovementStateMachine.ReusableData.RotationData.targetRotationReachTime;
         }
 
         #endregion

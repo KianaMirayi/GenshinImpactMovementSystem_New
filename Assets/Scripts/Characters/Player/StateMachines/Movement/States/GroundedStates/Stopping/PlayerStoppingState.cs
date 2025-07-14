@@ -24,6 +24,8 @@ namespace GenshinImpactMovementSystem
         {
             base.PhysicsUpdate();
 
+            RotateTowardsTargetRotation();
+
             if (IsMovingHorizontally())
             {
                 return;

@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace GenshinImpactMovementSystem
 {
@@ -26,6 +29,21 @@ namespace GenshinImpactMovementSystem
         private void OnDisable()
         {
             InputActions.Disable(); //½ûÓÃInputActions
+        }
+
+        public void DisableActionFor(InputAction action, float seconds)
+        {
+            StartCoroutine(DisableAction(action,seconds));
+
+        }
+
+        private IEnumerator DisableAction(InputAction action, float seconds)
+        { 
+            action.Disable();
+
+            yield return new WaitForSeconds(seconds);
+
+            action.Enable();
         }
     }
 } 

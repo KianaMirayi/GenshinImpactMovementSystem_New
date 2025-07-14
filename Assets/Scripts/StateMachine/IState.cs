@@ -24,5 +24,11 @@ namespace GenshinImpactMovementSystem
         public void Update();  //Run any non-Physics related Logics
 
         public void PhysicsUpdate();  //Run any Physics related Logics
+
+        public void OnAnimationEnterEvent();
+
+        public void OnAnimationExitEvent();
+
+        public void OnAnimationTransitaionEvent();  //Used for transition to other states when the animation enters a certain frame
     }
 }

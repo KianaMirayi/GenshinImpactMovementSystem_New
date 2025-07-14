@@ -35,5 +35,20 @@ namespace GenshinImpactMovementSystem
         {
             currentState?.PhysicsUpdate(); //物理更新状态
         }
+
+        public void OnAnimationEnterEvent()
+        { 
+            currentState?.OnAnimationEnterEvent();
+        }
+
+        public void OnAnimationExitEvent()
+        { 
+            currentState?.OnAnimationExitEvent();
+        }
+
+        public void OnAnimationTransitaionEvent()
+        { 
+            currentState?.OnAnimationTransitaionEvent();
+        }
     }
 }

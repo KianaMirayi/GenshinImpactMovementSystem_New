@@ -63,10 +63,12 @@
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\PlayerStateReusableData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\Moving\PlayerWalkData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\PlayerDashData.cs" />
     <Compile Include="Assets\Scripts\Data\Colider\SlopeData.cs" />
     <Compile Include="Assets\InputActions\Characters\Player\PlayerInputActions.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\PlayerRotationData.cs" />
     <Compile Include="Assets\Scripts\StateMachine\IState.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\PlayerDashingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\PlayerGroundedData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Utiliies\Input\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Moving\PlayerSprintingState.cs" />

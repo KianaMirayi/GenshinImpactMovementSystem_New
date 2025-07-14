@@ -85,6 +85,23 @@ namespace GenshinImpactMovementSystem
             //throw new System.NotImplementedException();
         }
 
+        public virtual void OnAnimationEnterEvent()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void OnAnimationExitEvent()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void OnAnimationTransitaionEvent()
+        {
+            throw new NotImplementedException();
+        }
+
+
+
         #endregion
 
 
@@ -268,6 +285,8 @@ namespace GenshinImpactMovementSystem
         {
             playerMovementStateMachine.ReusableData.shouldWalk = !playerMovementStateMachine.ReusableData.shouldWalk;
         }
+
+       
 
 
         #endregion

@@ -20,6 +20,8 @@ namespace GenshinImpactMovementSystem
 
         [field: SerializeField] public PlayerDashData DashData { get; private set; }
 
+        [field: SerializeField] public PlayerSprintData SprintData { get; private set; }
+
 
     }
 }

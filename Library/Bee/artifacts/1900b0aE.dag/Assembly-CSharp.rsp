@@ -366,6 +366,7 @@
 "Assets/Scripts/Characters/Player/Data/Layer/PlayerLayerData.cs"
 "Assets/Scripts/Characters/Player/Data/ScriptableObjects/PlayerSO.cs"
 "Assets/Scripts/Characters/Player/Data/States/Grounded/Moving/PlayerRunData.cs"
+"Assets/Scripts/Characters/Player/Data/States/Grounded/Moving/PlayerSprintData.cs"
 "Assets/Scripts/Characters/Player/Data/States/Grounded/Moving/PlayerWalkData.cs"
 "Assets/Scripts/Characters/Player/Data/States/Grounded/PlayerDashData.cs"
 "Assets/Scripts/Characters/Player/Data/States/Grounded/PlayerGroundedData.cs"

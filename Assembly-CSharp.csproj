@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Moving\PlayerMovingState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\PlayerGroundedState.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\Moving\PlayerSprintData.cs" />
     <Compile Include="Assets\Scripts\Data\Colider\DefaultColiderData.cs" />
   </ItemGroup>
   <ItemGroup>

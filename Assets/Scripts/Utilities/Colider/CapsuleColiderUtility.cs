@@ -30,7 +30,7 @@ namespace GenshinImpactMovementSystem
             capsuleColliderData.Initialize(gameObject);
         }
 
-        public void CalculateCapsuleColliderDimensions()
+        public void CalculateCapsuleColliderDimensions() //根据默认参数和坡度数据，重新计算并设置碰撞体的半径、高度和中心点
         {
             SetCapsuleColliderRadius(defaultColliderData.Radius);
 
@@ -59,7 +59,7 @@ namespace GenshinImpactMovementSystem
             capsuleColliderData.Collider.height = height;
         }
 
-        public void ReCalculateCapsuleColliderCenter()
+        public void ReCalculateCapsuleColliderCenter() //根据高度变化，重新计算碰撞体的中心点，保证碰撞体始终贴合角色底部
         {
             float colliderHeightDifference = defaultColliderData.Height - capsuleColliderData.Collider.height;
 

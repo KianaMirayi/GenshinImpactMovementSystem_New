@@ -13,11 +13,11 @@ namespace GenshinImpactMovementSystem
     {
         private PlayerDashData dashData;
 
-        private float startTime;
+        private float startTime; //记录进入冲刺状态的时间，用于判断连击冲刺
 
         private int consecutiveDashUsed;  //已冲刺次数
 
-        private bool shouldKeepRotating;
+        private bool shouldKeepRotating; //是否需要持续旋转角色朝向，依据输入决定
 
         public PlayerDashingState(PlayerMovementStateMachine _playerMovementStateMachine) : base(_playerMovementStateMachine)
         {
@@ -25,7 +25,7 @@ namespace GenshinImpactMovementSystem
         }
 
         #region IState Methods
-        public override void Enter()
+        public override void Enter() //设置速度修正、旋转参数
         {
             base.Enter();
 
@@ -33,13 +33,13 @@ namespace GenshinImpactMovementSystem
 
             playerMovementStateMachine.ReusableData.RotationData = dashData.RotationData;
 
-            AddForceOnTransitionFromStationaryState();
+            AddForceOnTransitionFromStationaryState(); //如果角色静止，调用 AddForceOnTransitionFromStationaryState() 给予初始冲刺力。
 
             shouldKeepRotating = playerMovementStateMachine.ReusableData.movementInput != Vector2.zero;  //当有任何移动的输入时都应该考虑旋转方向
 
             UpdateConsecutiveDashed();
 
-            startTime = Time.time;
+            startTime = Time.time; //记录进入状态的时间
         }
 
         public override void OnAnimationTransitaionEvent()
@@ -52,7 +52,7 @@ namespace GenshinImpactMovementSystem
                 return;
             }
 
-            playerMovementStateMachine.ChangeState(playerMovementStateMachine.SprintingState);  //冲刺后继续前进的话进入疾跑状态
+            playerMovementStateMachine.ChangeState(playerMovementStateMachine.SprintingState);  //冲刺后有输入的话进入疾跑状态
         }
 
         public override void Exit()
@@ -83,7 +83,7 @@ namespace GenshinImpactMovementSystem
 
 
         #region Main Methods
-        private void AddForceOnTransitionFromStationaryState()
+        private void AddForceOnTransitionFromStationaryState()  //如果角色没有移动输入，给予角色一个冲刺方向的速度（沿角色当前朝向
         {
             if (playerMovementStateMachine.ReusableData.movementInput != Vector2.zero)
             {
@@ -118,7 +118,7 @@ namespace GenshinImpactMovementSystem
 
         private bool IsConsecutive()
         {
-            return Time.time < startTime + dashData.TimeToBeConsideredConsecutive;  // 判断当前游戏时间是否大于进入进入冲刺时的时间与冲刺时长之和
+            return Time.time < startTime + dashData.TimeToBeConsideredConsecutive;  // 判断当前游戏时间是否小于进入进入冲刺时的时间与冲刺时长之和
         }
 
         #endregion

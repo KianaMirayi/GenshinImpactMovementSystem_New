@@ -39,7 +39,7 @@ namespace GenshinImpactMovementSystem
                 return;
             }
 
-            if (Time.time < startTime + sprintData.sprintToRunTime)
+            if (Time.time < startTime + sprintData.sprintToRunTime)//如果当前时间距离进入疾跑状态的时间还没超过 sprintToRunTime（疾跑最短持续时间），则继续疾跑，不做状态切换
             {
                 return;
             }

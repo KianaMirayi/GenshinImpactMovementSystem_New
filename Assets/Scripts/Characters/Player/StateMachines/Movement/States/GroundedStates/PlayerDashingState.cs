@@ -31,6 +31,9 @@ namespace GenshinImpactMovementSystem
 
             playerMovementStateMachine.ReusableData.movementSpeedModifier = dashData.DashSpeedModifier;
 
+            playerMovementStateMachine.ReusableData.currentJumpForce = airboneData.JumpData.StrongForce;
+
+
             playerMovementStateMachine.ReusableData.RotationData = dashData.RotationData;
 
             AddForceOnTransitionFromStationaryState(); //如果角色静止，调用 AddForceOnTransitionFromStationaryState() 给予初始冲刺力。

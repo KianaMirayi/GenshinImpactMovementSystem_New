@@ -65,6 +65,8 @@ namespace GenshinImpactMovementSystem
             }
         }
 
+        public Vector3 currentJumpForce { get; set; }
+
         public PlayerRotationData RotationData { get; set; }
     }
 }

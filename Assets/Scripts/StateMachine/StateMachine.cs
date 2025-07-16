@@ -50,5 +50,10 @@ namespace GenshinImpactMovementSystem
         { 
             currentState?.OnAnimationTransitaionEvent();
         }
+
+        public void OnTriggerEnterEvent(Collider collider)
+        {
+            currentState?.OnTriggerEnterEvent(collider);
+        }
     }
 }

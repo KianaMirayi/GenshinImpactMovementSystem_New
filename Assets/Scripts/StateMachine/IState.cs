@@ -30,5 +30,6 @@ namespace GenshinImpactMovementSystem
         public void OnAnimationExitEvent();
 
         public void OnAnimationTransitaionEvent();  //Used for transition to other states when the animation enters a certain frame
+        public void OnTriggerEnterEvent(Collider collider);
     }
 }

@@ -72,6 +72,11 @@ namespace GenshinImpactMovementSystem
             Debug.Log(skinnedMeshRenderer.bounds.size);
         }
 
+        private void OnTriggerEnter(Collider collider)
+        {
+            movementStateMachine.OnTriggerEnterEvent(collider);
+        }
+
         private void Update()
         {
             movementStateMachine.HandleInput();  //处理输入
@@ -84,7 +89,7 @@ namespace GenshinImpactMovementSystem
             movementStateMachine.PhysicsUpdate(); // 处理与物理效果相关的数据
         }
 
-        
 
+       
     }
 }

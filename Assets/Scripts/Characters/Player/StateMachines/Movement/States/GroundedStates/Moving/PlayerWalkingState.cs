@@ -19,13 +19,16 @@ namespace GenshinImpactMovementSystem
             base.Enter();
 
             playerMovementStateMachine.ReusableData.movementSpeedModifier = movementData.WalkData.speedModifier ;
+
+            playerMovementStateMachine.ReusableData.currentJumpForce = airboneData.JumpData.WeakForce;
+
         }
 
 
 
         #endregion
 
-        
+
         /*
         #region Reusable Methods
 
@@ -49,7 +52,7 @@ namespace GenshinImpactMovementSystem
        */
 
 
-        
+
         #region Input Methods
         protected override void OnWalkToggleStarted(InputAction.CallbackContext context)
         {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -98,9 +99,11 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.Player.Input.PlayerActions.Movement.canceled += OnMovementCanceled;
 
             playerMovementStateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
+
+            playerMovementStateMachine.Player.Input.PlayerActions.Jump.started += OnJumpStarted;
         }
 
-       
+
 
         protected override void RemoveInputActionsCallbacks()
         {
@@ -109,6 +112,8 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.Player.Input.PlayerActions.Movement.canceled -= OnMovementCanceled;
 
             playerMovementStateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
+
+            playerMovementStateMachine.Player.Input.PlayerActions.Jump.started -= OnJumpStarted;
         }
 
         #endregion
@@ -132,6 +137,11 @@ namespace GenshinImpactMovementSystem
         protected virtual void OnDashStarted(InputAction.CallbackContext context)
         {
             playerMovementStateMachine.ChangeState(playerMovementStateMachine.dashingState);
+        }
+
+        protected virtual void OnJumpStarted(InputAction.CallbackContext context)
+        {
+            playerMovementStateMachine.ChangeState(playerMovementStateMachine.JumpingState);
         }
 
         protected virtual void OnMove()

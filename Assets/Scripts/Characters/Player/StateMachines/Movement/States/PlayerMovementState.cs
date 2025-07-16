@@ -16,6 +16,8 @@ namespace GenshinImpactMovementSystem
 
         protected PlayerGroundedData movementData;
 
+        protected PlayerAirboneData airboneData;
+
         //protected Vector2 playerMovmentStateMachine.ReusableData.MovementInput;
 
         
@@ -40,6 +42,8 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine = _playerMovementStateMachine;
 
             movementData = playerMovementStateMachine.Player.Data.GroundedData;
+
+            airboneData = playerMovementStateMachine.Player.Data.AirboneData;
 
             InitializeData();
         }
@@ -89,18 +93,31 @@ namespace GenshinImpactMovementSystem
 
         public virtual void OnAnimationEnterEvent()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public virtual void OnAnimationExitEvent()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public virtual void OnAnimationTransitaionEvent()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
+
+        public virtual void OnTriggerEnterEvent(Collider collider)
+        {
+            //throw new NotImplementedException();
+            if (playerMovementStateMachine.Player.layerData.IsGroundLayer(collider.gameObject.layer))
+            {
+                OnContactWithGround(collider);
+
+                return;
+            }
+        }
+
+        
 
 
 
@@ -318,7 +335,10 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.ReusableData.shouldWalk = !playerMovementStateMachine.ReusableData.shouldWalk;
         }
 
-       
+        protected virtual void OnContactWithGround(Collider collider)
+        {
+            
+        }
 
 
         #endregion

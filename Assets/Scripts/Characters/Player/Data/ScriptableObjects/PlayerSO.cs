@@ -11,6 +11,8 @@ namespace GenshinImpactMovementSystem
         //Hold individual State Data , such as specific State Speed Modifier or Rotation Reach Time
 
         [field: SerializeField]public PlayerGroundedData GroundedData { get; private set; }
+
+        [field: SerializeField] public PlayerAirboneData AirboneData { get; private set; }
     }
         
     

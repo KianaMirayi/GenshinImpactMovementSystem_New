@@ -24,6 +24,9 @@ namespace GenshinImpactMovementSystem
 
             playerMovementStateMachine.ReusableData.movementSpeedModifier = movementData.RunData.speedModifier;
 
+            playerMovementStateMachine.ReusableData.currentJumpForce = airboneData.JumpData.MediumForce;
+
+
             startTime = Time.time;
 
         }

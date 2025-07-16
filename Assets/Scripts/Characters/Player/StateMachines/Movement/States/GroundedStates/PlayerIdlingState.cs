@@ -21,6 +21,8 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.ReusableData.movementSpeedModifier = 0f;
 
             ResetVelocity();
+
+            playerMovementStateMachine.ReusableData.currentJumpForce = airboneData.JumpData.StationaryForce;
         }
 
         public override void Update()

@@ -69,7 +69,7 @@ namespace GenshinImpactMovementSystem
 
         
 
-        public virtual void HandleInput()
+        public virtual void HandleInput()  //HandleInput() 是状态机接口 IState 的标准方法，每帧由状态机调用。
         {
             //throw new System.NotImplementedException();
             ReadMovementInput();
@@ -131,19 +131,25 @@ namespace GenshinImpactMovementSystem
             float movementSpeed = GetMovementSpeed();
 
 
-            Vector3 currentPlayerHorizontalVelocity = GetPlayerHoriztontalVelocity();
+            Vector3 currentPlayerHorizontalVelocity = GetPlayerHoriztontalVelocity();//是获得角色“此刻”在地面上的移动速度向量，角色在物理世界中可能因为惯性、外力等原因，当前速度并不等于目标速度，获取当前速度是为了后续做“速度矫正”，确保角色速度能精确响应输入
             playerMovementStateMachine.Player.Rigidbody.AddForce(movementSpeed * targetRotationDirection - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
-
+            //movementSpeed * targetRotationDirection：这是期望的目标速度向量，方向由输入和相机决定，大小由速度参数决定
+            //currentPlayerHorizontalVelocity：这是当前的实际速度向量
+            //两者做差，得到需要补偿的速度变化量（Δv） => Δv = 目标速度向量 - 当前速度向量，这个 Δv 就是我们希望刚体“立刻”达到的速度变化
+            //AddForce(..., ForceMode.VelocityChange) 的作用是瞬时改变刚体速度，不考虑质量和时间，直接将刚体速度加上 Δv
             Debug.Log("Speed: "+movementSpeed); //
 
             //AddForce对速度的改变不是立即生效的，而Velocity对速度的改变是立即生效的，一般推荐使用AddForce
             //ForceMode中的VelocityChange对速度的设置既不依赖于当前角色的质量，也不依赖于时间;
             //AddForce方法是对当前已经存在的力施加影响，而VelocityChange是直接设置速度的变化量,所以在使用AddForce之前要减去玩家当前的运动向量和速度；
+            //角色每帧都会被“拉”到目标速度，响应极其灵敏
+            //不会因为物理引擎的阻力、摩擦、质量等因素导致速度漂移或延迟
+            //角色的移动完全由输入和参数控制，物理表现高度可控
         }
 
-        
 
-        private float Rotate(Vector3 targetAngle)
+
+        private float Rotate(Vector3 targetAngle) //根据目标方向计算目标旋转角度，并平滑旋转角色朝向
         {
             float directionAngle = UpdateTargetRotation(targetAngle);
 
@@ -233,6 +239,7 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.Player.Rigidbody.MoveRotation(targetRotation);  //旋转玩家
         }
 
+        //计算目标旋转角度（可选是否叠加相机朝向），并更新状态机中的目标旋转数据
         protected float UpdateTargetRotation(Vector3 targetAngle, bool shouldConsiderCameraRoration = true)
         {
             float directionAngle = GetDirectionAngle(targetAngle);
@@ -280,6 +287,9 @@ namespace GenshinImpactMovementSystem
             Vector3 playerHoriztontalVelocity = GetPlayerHoriztontalVelocity();  //向玩家当前方向的反方向施加力以达到减速的目的
 
             playerMovementStateMachine.Player.Rigidbody.AddForce(-playerHoriztontalVelocity * playerMovementStateMachine.ReusableData.movementDecelerationForce, ForceMode.Acceleration);  //Acceleration依赖于时间
+            //使用 ForceMode.Acceleration,表示这个力是加速度(单位 m/(s*s))与刚体质量无关
+            //物理引擎会在每个 FixedUpdate 里根据这个加速度逐步减小角色的速度,直到趋近于零
+            //该方法模拟了摩擦力或刹车力,让角色在没有输入时逐渐减速,而不是瞬间停下
         }
 
         protected bool IsMovingHorizontally(float minMagnitude = 0.1f)

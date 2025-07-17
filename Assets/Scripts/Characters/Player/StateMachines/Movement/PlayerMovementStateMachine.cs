@@ -39,7 +39,7 @@ namespace GenshinImpactMovementSystem
         public PlayerHardStoppingState HardStoppingState { get; }
 
         public PlayerJumpingState JumpingState { get; }
-
+        public PlayerFallingState FallingState { get; }
 
         public PlayerMovementStateMachine(Player _player)  //实例化玩家的具体状态
         { 
@@ -61,6 +61,8 @@ namespace GenshinImpactMovementSystem
             HardStoppingState = new PlayerHardStoppingState(this);
 
             JumpingState = new PlayerJumpingState(this);
+            FallingState = new PlayerFallingState(this);
+
 
         }
     }

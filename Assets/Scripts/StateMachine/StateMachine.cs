@@ -55,5 +55,10 @@ namespace GenshinImpactMovementSystem
         {
             currentState?.OnTriggerEnterEvent(collider);
         }
+
+        public void OnTriggerExitEvent(Collider collider)
+        { 
+            currentState?.OnTriggerExitEvent(collider);
+        }
     }
 }

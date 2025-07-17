@@ -105,6 +105,13 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.Player.Input.PlayerActions.Sprint.performed -= OnSprintPerformed;
         }
 
+        protected override void OnFall()
+        {
+            shouldResetSprintState = false;
+
+            base.OnFall();
+        }
+
 
 
         #endregion

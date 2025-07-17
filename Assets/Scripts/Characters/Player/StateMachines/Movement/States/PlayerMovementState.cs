@@ -117,7 +117,20 @@ namespace GenshinImpactMovementSystem
             }
         }
 
-        
+        public void OnTriggerExitEvent(Collider collider)
+        {
+            //throw new NotImplementedException();
+            if (playerMovementStateMachine.Player.layerData.IsGroundLayer(collider.gameObject.layer))
+            { 
+                OnContactWithGroundExit(collider);
+
+                return;
+                
+            }
+
+        }
+
+
 
 
 
@@ -286,6 +299,13 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.Player.Rigidbody.velocity = Vector3.zero; //重置玩家的速度
         }
 
+        protected void ResetVerticalVelocity()
+        { 
+            Vector3 playerHorizontalVelocity = GetPlayerHoriztontalVelocity();
+
+            playerMovementStateMachine.Player.Rigidbody.velocity = playerHorizontalVelocity;
+        }
+
 
         protected virtual void AddInputActionsCallbacks()
         {
@@ -342,6 +362,16 @@ namespace GenshinImpactMovementSystem
             return GetPlayerVerticalVelocity().y < -minVelocity;
         }
 
+        protected virtual void OnContactWithGround(Collider collider)
+        {
+
+        }
+
+        protected virtual void OnContactWithGroundExit(Collider collider)
+        {
+
+        }
+
         #endregion
 
 
@@ -351,12 +381,6 @@ namespace GenshinImpactMovementSystem
         {
             playerMovementStateMachine.ReusableData.shouldWalk = !playerMovementStateMachine.ReusableData.shouldWalk;
         }
-
-        protected virtual void OnContactWithGround(Collider collider)
-        {
-            
-        }
-
 
         #endregion
 

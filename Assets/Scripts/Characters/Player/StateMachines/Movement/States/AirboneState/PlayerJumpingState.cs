@@ -11,7 +11,11 @@ namespace GenshinImpactMovementSystem
 
         private bool shouldKeepRotating;
 
+        private bool canStartingFalling;
+
         private PlayerJumpData jumpData;
+
+
         public PlayerJumpingState(PlayerMovementStateMachine _playerMovementStateMachine) : base(_playerMovementStateMachine)
         {
             jumpData = airboneData.JumpData;
@@ -32,6 +36,23 @@ namespace GenshinImpactMovementSystem
 
             Jump();
 
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (!canStartingFalling && IsMovingUp(0f))
+            { 
+                canStartingFalling = true;
+            }
+
+            if (!canStartingFalling || GetPlayerVerticalVelocity().y > 0f)
+            {
+                return;
+            }
+
+            playerMovementStateMachine.ChangeState(playerMovementStateMachine.FallingState);  //只要垂直方向的向量为负值，就认定为坠落状态；
         }
 
         public override void PhysicsUpdate()
@@ -59,6 +80,8 @@ namespace GenshinImpactMovementSystem
             base.Exit();
 
             SetBaseRotationData();
+
+            canStartingFalling = false;
         }
 
 

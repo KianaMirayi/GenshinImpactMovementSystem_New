@@ -9,6 +9,7 @@ namespace GenshinImpactMovementSystem
         public CapsuleCollider Collider { get; private set; }
 
         public Vector3 ColliderCenterInLocalSpace { get; private set; }
+        public Vector3 ColliderVerticalExtents { get; private set; }
 
 
         public void Initialize(GameObject gameObject) //初始化被传入游戏对象的碰撞体
@@ -31,6 +32,8 @@ namespace GenshinImpactMovementSystem
         public void UpdateColliderData()
         {
             ColliderCenterInLocalSpace = Collider.center;
+
+            ColliderVerticalExtents = new Vector3(0f, Collider.bounds.extents.y, 0f);
         }
 
 

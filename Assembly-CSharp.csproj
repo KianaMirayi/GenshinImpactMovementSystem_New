@@ -85,10 +85,13 @@
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\PlayerMovementStateMachine.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\AirboneState\PlayerAirboneState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\Moving\PlayerRunData.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\Data\Colliders\PlayerTriggerColliderData.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\Data\States\Airbone\PlayerFallData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\AirboneState\PlayerJumpingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Moving\PlayerWalkingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\Layer\PlayerLayerData.cs" />
     <Compile Include="Assets\Scripts\Data\Colider\CapsuleColiderData.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\AirboneState\PlayerFallingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Moving\PlayerRunningState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\PlayerMovementState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Moving\PlayerMovingState.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Stopping\PlayerStoppingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\PlayerGroundedState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\Moving\PlayerSprintData.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\Utiliies\Colliders\PlayerCapsuleColliderUtility.cs" />
     <Compile Include="Assets\Scripts\Data\Colider\DefaultColiderData.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -112,6 +113,20 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.ReusableData.shouldSprint = false;
         }
 
+
+        private bool IsThereGroundUnderBeneath()
+        {
+            BoxCollider groundCheckCollider = playerMovementStateMachine.Player.capsuleColiderUtility.TriggerColliderData.GroundCheckCollider;
+
+            Vector3 groundColliderCenterInWorldSpace = groundCheckCollider.bounds.center;
+
+            Collider[] overlappedGroundColldiers = Physics.OverlapBox(groundColliderCenterInWorldSpace,groundCheckCollider.bounds.extents,groundCheckCollider.transform.rotation,playerMovementStateMachine.Player.layerData.groundLayer,QueryTriggerInteraction.Ignore);
+
+            return overlappedGroundColldiers.Length > 0;
+
+
+        }
+
         #endregion
 
         #region Reusable Methods
@@ -138,6 +153,33 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
 
             playerMovementStateMachine.Player.Input.PlayerActions.Jump.started -= OnJumpStarted;
+        }
+
+        protected override void OnContactWithGroundExit(Collider collider)
+        {
+            base.OnContactWithGroundExit(collider);
+
+            if (IsThereGroundUnderBeneath())
+            {
+                return;
+            }
+
+            Vector3 capsuleColliderCenterInWorldSpace = playerMovementStateMachine.Player.capsuleColiderUtility.capsuleColliderData.Collider.bounds.center;
+
+            Ray downwardsRayFromCapsuleBottom = new Ray(capsuleColliderCenterInWorldSpace - playerMovementStateMachine.Player.capsuleColiderUtility.capsuleColliderData.ColliderVerticalExtents, Vector3.down);
+
+            if (!Physics.Raycast(downwardsRayFromCapsuleBottom, out _, movementData.GroundToFallRayDistance, playerMovementStateMachine.Player.layerData.groundLayer, QueryTriggerInteraction.Ignore))
+            { 
+                OnFall();
+                
+            }
+        }
+
+        
+
+        protected virtual void OnFall()
+        {
+            playerMovementStateMachine.ChangeState(playerMovementStateMachine.FallingState);
         }
 
         #endregion

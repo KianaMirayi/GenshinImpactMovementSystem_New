@@ -20,7 +20,8 @@ namespace GenshinImpactMovementSystem
         [field: SerializeField]public PlayerSO Data { get; private set; }  //处理玩家的数据
 
         [field: Header("Collisions")]
-        [field: SerializeField] public CapsuleColiderUtility capsuleColiderUtility { get; private set; }
+        [field: SerializeField] public PlayerCapsuleColliderUtility capsuleColiderUtility { get; private set; }
+
         [field: SerializeField] public PlayerLayerData layerData { get; private set; }
 
 
@@ -75,6 +76,11 @@ namespace GenshinImpactMovementSystem
         private void OnTriggerEnter(Collider collider)
         {
             movementStateMachine.OnTriggerEnterEvent(collider);
+        }
+
+        private void OnTriggerExit(Collider collider)
+        {
+            movementStateMachine.OnTriggerExitEvent(collider);
         }
 
         private void Update()

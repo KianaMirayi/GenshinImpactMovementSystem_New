@@ -4,10 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace GenshinImpactMovementSystem
-{
+{ 
+    //从较低的高度坠落进入轻着陆状态
+    //从较高的高度坠落进入硬着陆状态或者翻滚状态(取决于是否有输入)
+
     public class PlayerFallingState : PlayerAirboneState
     {
-        public PlayerFallData fallData;
+        private PlayerFallData fallData;
+
+        private Vector3 playerPositionOnEnter;
         public PlayerFallingState(PlayerMovementStateMachine _playerMovementStateMachine) : base(_playerMovementStateMachine)
         {
             fallData = airboneData.FallData;
@@ -17,6 +22,8 @@ namespace GenshinImpactMovementSystem
         public override void Enter()
         {
             base.Enter();
+
+            playerPositionOnEnter = playerMovementStateMachine.Player.transform.position;
 
             playerMovementStateMachine.ReusableData.movementSpeedModifier = 0f;
 
@@ -42,6 +49,31 @@ namespace GenshinImpactMovementSystem
 
 
         }
+
+        protected override void OnContactWithGround(Collider collider)
+        {
+            float fallDistance = Mathf.Abs(playerPositionOnEnter.y - playerMovementStateMachine.Player.transform.position.y);
+
+            if (fallDistance <= airboneData.FallData.minDistanceToBeConsideredHardFall)  //若距离小于最小硬着陆判定距离，则进入轻着陆状态
+            {
+                playerMovementStateMachine.ChangeState(playerMovementStateMachine.LightLandingState);
+
+                return;
+            }
+
+            if (playerMovementStateMachine.ReusableData.shouldWalk && !playerMovementStateMachine.ReusableData.shouldSprint || playerMovementStateMachine.ReusableData.movementInput == Vector2.zero) //若没有读取到输入且walkToggle为false，或者不在急速奔跑状态时坠落，则进入硬着陆状态
+            {
+                playerMovementStateMachine.ChangeState(playerMovementStateMachine.HardLandingState);
+
+                return;
+            }
+
+            
+                playerMovementStateMachine.ChangeState(playerMovementStateMachine.RollingState);  //进入翻滚状态
+            
+
+        }
+
         #endregion
 
         #region Main Methods

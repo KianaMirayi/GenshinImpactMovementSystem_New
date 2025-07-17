@@ -41,6 +41,10 @@ namespace GenshinImpactMovementSystem
         public PlayerJumpingState JumpingState { get; }
         public PlayerFallingState FallingState { get; }
 
+        public PlayerLightLandingState LightLandingState { get; }
+        public PlayerHardLandingState HardLandingState { get; }
+        public PlayerRollingState RollingState { get; }
+
         public PlayerMovementStateMachine(Player _player)  //实例化玩家的具体状态
         { 
             Player = _player;
@@ -62,6 +66,12 @@ namespace GenshinImpactMovementSystem
 
             JumpingState = new PlayerJumpingState(this);
             FallingState = new PlayerFallingState(this);
+
+            LightLandingState = new PlayerLightLandingState(this);
+            HardLandingState = new PlayerHardLandingState(this);
+
+            RollingState = new PlayerRollingState(this);
+            
 
 
         }

@@ -65,8 +65,10 @@
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\PlayerStateReusableData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Airbone\PlayerAirboneData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\Moving\PlayerWalkData.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\Landing\PlayerRollData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Stopping\PlayerHardStoppingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\Stopping\PlayerStopData.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Landing\PlayerRollingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\PlayerDashData.cs" />
     <Compile Include="Assets\Scripts\Data\Colider\SlopeData.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Airbone\PlayerFallData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\AirboneState\PlayerJumpingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Moving\PlayerWalkingState.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Landing\PlayerLightLandingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\Layer\PlayerLayerData.cs" />
     <Compile Include="Assets\Scripts\Data\Colider\CapsuleColiderData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\AirboneState\PlayerFallingState.cs" />
@@ -98,7 +101,9 @@
     <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Stopping\PlayerStoppingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\PlayerGroundedState.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Landing\PlayerLandingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\Moving\PlayerSprintData.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Landing\PlayerHardLandingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Utiliies\Colliders\PlayerCapsuleColliderUtility.cs" />
     <Compile Include="Assets\Scripts\Data\Colider\DefaultColiderData.cs" />
   </ItemGroup>

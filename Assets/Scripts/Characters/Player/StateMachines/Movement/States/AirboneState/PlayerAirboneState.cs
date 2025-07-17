@@ -25,7 +25,7 @@ namespace GenshinImpactMovementSystem
 
         protected override void OnContactWithGround(Collider collider)
         { 
-            playerMovementStateMachine.ChangeState(playerMovementStateMachine.IdlingState);
+            playerMovementStateMachine.ChangeState(playerMovementStateMachine.LightLandingState);
         }
 
 

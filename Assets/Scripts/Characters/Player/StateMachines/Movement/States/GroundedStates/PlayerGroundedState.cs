@@ -20,6 +20,15 @@ namespace GenshinImpactMovementSystem
 
         #region IState Methods
 
+        public override void Enter()
+        {
+            base.Enter();
+
+            UpdateShouldSprint();
+        }
+
+        
+
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
@@ -88,6 +97,21 @@ namespace GenshinImpactMovementSystem
 
         }
 
+        private void UpdateShouldSprint()
+        {
+            if (!playerMovementStateMachine.ReusableData.shouldSprint)
+            {
+                return;
+            }
+
+            if (playerMovementStateMachine.ReusableData.movementInput != Vector2.zero)
+            {
+                return;
+            }
+
+            playerMovementStateMachine.ReusableData.shouldSprint = false;
+        }
+
         #endregion
 
         #region Reusable Methods
@@ -146,6 +170,13 @@ namespace GenshinImpactMovementSystem
 
         protected virtual void OnMove()
         {
+            if (playerMovementStateMachine.ReusableData.shouldSprint)
+            {
+                playerMovementStateMachine.ChangeState(playerMovementStateMachine.SprintingState);
+
+                return;
+            }
+
             if (playerMovementStateMachine.ReusableData.shouldWalk)
             {
                 playerMovementStateMachine.ChangeState(playerMovementStateMachine.WalkingState);

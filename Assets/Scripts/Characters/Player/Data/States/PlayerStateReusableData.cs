@@ -21,6 +21,8 @@ namespace GenshinImpactMovementSystem
 
         public bool shouldWalk { get; set; }
 
+        public bool shouldSprint { get; set; }
+
 
         //角色朝向控制。每次移动或旋转时，目标角度会被更新，角色会平滑旋转到该角度
         private Vector3 currentTargetRotation;

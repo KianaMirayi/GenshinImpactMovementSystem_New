@@ -309,6 +309,13 @@ namespace GenshinImpactMovementSystem
             //该方法模拟了摩擦力或刹车力,让角色在没有输入时逐渐减速,而不是瞬间停下
         }
 
+        protected void DecelerateVertically()
+        {
+            Vector3 playerVerticalVelocity = GetPlayerVerticalVelocity();
+
+            playerMovementStateMachine.Player.Rigidbody.AddForce(-playerVerticalVelocity * playerMovementStateMachine.ReusableData.movementDecelerationForce, ForceMode.Acceleration);
+        }
+
         protected bool IsMovingHorizontally(float minMagnitude = 0.1f)
         {
             Vector3 playerHorizontalVelocity = GetPlayerHoriztontalVelocity();
@@ -323,6 +330,16 @@ namespace GenshinImpactMovementSystem
         {
             playerMovementStateMachine.ReusableData.RotationData = movementData.baseRotationData;
             playerMovementStateMachine.ReusableData.TimeToReachTargetRotation = playerMovementStateMachine.ReusableData.RotationData.targetRotationReachTime;
+        }
+
+        protected bool IsMovingUp(float minVelocity = 0.1f)
+        {
+            return GetPlayerVerticalVelocity().y > minVelocity;
+        }
+
+        protected bool IsMovingDown(float minVelocity = 0.1f)
+        {
+            return GetPlayerVerticalVelocity().y < -minVelocity;
         }
 
         #endregion

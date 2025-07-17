@@ -10,6 +10,17 @@ namespace GenshinImpactMovementSystem
         {
         }
 
+        #region IState Methods
+
+        public override void Enter()
+        {
+            base.Enter();
+
+            ResetSprintState();
+        }
+
+        #endregion
+
         #region Reusable Methods
 
         protected override void OnContactWithGround(Collider collider)
@@ -17,6 +28,11 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.ChangeState(playerMovementStateMachine.IdlingState);
         }
 
+
+        protected virtual void ResetSprintState()
+        { 
+            playerMovementStateMachine.ReusableData.shouldSprint = false;
+        }
         #endregion
     }
 }

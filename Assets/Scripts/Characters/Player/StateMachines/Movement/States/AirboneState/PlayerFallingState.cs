@@ -52,7 +52,7 @@ namespace GenshinImpactMovementSystem
 
         protected override void OnContactWithGround(Collider collider)
         {
-            float fallDistance = Mathf.Abs(playerPositionOnEnter.y - playerMovementStateMachine.Player.transform.position.y);
+            float fallDistance = playerPositionOnEnter.y - playerMovementStateMachine.Player.transform.position.y;
 
             if (fallDistance <= airboneData.FallData.minDistanceToBeConsideredHardFall)  //若距离小于最小硬着陆判定距离，则进入轻着陆状态
             {

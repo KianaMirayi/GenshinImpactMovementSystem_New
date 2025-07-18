@@ -233,9 +233,16 @@ namespace GenshinImpactMovementSystem
             return new Vector3(playerMovementStateMachine.ReusableData.movementInput.x, 0f, playerMovementStateMachine.ReusableData.movementInput.y);
         }
 
-        protected float GetMovementSpeed()
+        protected float GetMovementSpeed(bool shouldConsiderSlope = true)
         { 
-            return movementData.baseSpeed * playerMovementStateMachine.ReusableData.movementSpeedModifier * playerMovementStateMachine.ReusableData.movementOnSlopeSpeedModifier;
+            float movementSpeed = movementData.baseSpeed * playerMovementStateMachine.ReusableData.movementSpeedModifier;
+
+            if (shouldConsiderSlope)
+            { 
+                movementSpeed *= playerMovementStateMachine.ReusableData.movementOnSlopeSpeedModifier;
+            }
+
+            return movementSpeed;
 
             
         }

@@ -12,7 +12,7 @@ namespace GenshinImpactMovementSystem
 
     public abstract class StateMachine  //抽象类
     {
-        protected IState currentState;  //当前状态
+        public IState currentState;  //当前状态
 
         public void ChangeState(IState newState)
         { 

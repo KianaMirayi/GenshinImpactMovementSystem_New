@@ -37,7 +37,7 @@ namespace GenshinImpactMovementSystem
 
             playerMovementStateMachine.ReusableData.RotationData = dashData.RotationData;
 
-            AddForceOnTransitionFromStationaryState(); //如果角色静止，调用 AddForceOnTransitionFromStationaryState() 给予初始冲刺力。
+            Dash(); //如果角色静止，调用 AddForceOnTransitionFromStationaryState() 给予初始冲刺力。
 
             shouldKeepRotating = playerMovementStateMachine.ReusableData.movementInput != Vector2.zero;  //当有任何移动的输入时都应该考虑旋转方向
 
@@ -87,20 +87,24 @@ namespace GenshinImpactMovementSystem
 
 
         #region Main Methods
-        private void AddForceOnTransitionFromStationaryState()  //如果角色没有移动输入，给予角色一个冲刺方向的速度（沿角色当前朝向
+        private void Dash()  //如果角色没有移动输入，给予角色一个冲刺方向的速度（沿角色当前朝向
         {
+            Vector3 dashDirection = playerMovementStateMachine.Player.transform.forward;
+
+            dashDirection.y = 0f;
+
+            UpdateTargetRotation(dashDirection, false);
+
             if (playerMovementStateMachine.ReusableData.movementInput != Vector2.zero)
             {
-                return; 
+                UpdateTargetRotation(GetMovementDirection());
+
+                dashDirection = GetTargetRotationDirection(playerMovementStateMachine.ReusableData.CurrentTargetRotation.y);
             }
 
-            Vector3 characterRotationDirection = playerMovementStateMachine.Player.transform.forward;
+           
 
-            characterRotationDirection.y = 0f;
-
-            UpdateTargetRotation(characterRotationDirection,false);
-
-            playerMovementStateMachine.Player.Rigidbody.velocity = characterRotationDirection * GetMovementSpeed();
+            playerMovementStateMachine.Player.Rigidbody.velocity = dashDirection * GetMovementSpeed(false);
         }
 
         private void UpdateConsecutiveDashed()

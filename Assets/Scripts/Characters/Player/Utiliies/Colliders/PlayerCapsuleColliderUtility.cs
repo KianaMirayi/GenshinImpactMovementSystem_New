@@ -8,6 +8,14 @@ namespace GenshinImpactMovementSystem
     [Serializable]
     public class PlayerCapsuleColliderUtility : CapsuleColiderUtility
     {
-        [field: SerializeField] public PlayerTriggerColliderData TriggerColliderData { get; private set; }   
+        [field: SerializeField] public PlayerTriggerColliderData TriggerColliderData { get; private set; }
+
+
+        protected override void OnInitalize()
+        {
+            base.OnInitalize();
+
+            TriggerColliderData.Initialize();
+        }
     }
 }

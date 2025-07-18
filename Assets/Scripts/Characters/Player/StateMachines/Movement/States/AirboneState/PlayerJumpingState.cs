@@ -27,6 +27,7 @@ namespace GenshinImpactMovementSystem
         {
             base.Enter();
 
+            
             playerMovementStateMachine.ReusableData.movementSpeedModifier = 0f; //跳跃时玩家不可以移动
 
             playerMovementStateMachine.ReusableData.RotationData = jumpData.RotationData;
@@ -36,6 +37,8 @@ namespace GenshinImpactMovementSystem
             shouldKeepRotating = playerMovementStateMachine.ReusableData.movementInput != Vector2.zero;  //如果在跳跃状态中仍有输入，则应该旋转
 
             Jump();
+
+            
 
         }
 
@@ -93,12 +96,19 @@ namespace GenshinImpactMovementSystem
         #region Main Methods
         private void Jump()
         {
+
+            // 有概率出现跳不起来的问题，怀疑要使用缓冲机制，但能力有限做不出来
+
+            Debug.Log("Jump() Called");
+
             Vector3 jumpForce = playerMovementStateMachine.ReusableData.currentJumpForce;  //临时跳跃力
 
             Vector3 jumpDirection = playerMovementStateMachine.Player.transform.forward;
 
             if (shouldKeepRotating)
             {
+                UpdateTargetRotation(GetMovementDirection());
+
                 jumpDirection = GetTargetRotationDirection(playerMovementStateMachine.ReusableData.CurrentTargetRotation.y);
             }
 
@@ -120,7 +130,7 @@ namespace GenshinImpactMovementSystem
                     jumpForce.x *= forceModifier;
                     jumpForce.z *= forceModifier;
 
-                    Debug.Log("forceModifier : " + forceModifier + "groudAngle: " + groundAngle );
+                    Debug.Log("Is Movingup, forceModifier : " + forceModifier + " groudAngle: " + groundAngle );
                 }
 
                 if (IsMovingDown())
@@ -129,9 +139,12 @@ namespace GenshinImpactMovementSystem
 
                     jumpForce.y *= forceModifier;
 
-                    Debug.Log("forceModifier : " + forceModifier + "groudAngle: " + groundAngle);
+                    Debug.Log("Is Movingup, forceModifier : " + forceModifier + " groudAngle: " + groundAngle);
+
 
                 }
+
+                
             }
 
             ResetVelocity();//重置速度以避免跳跃当前速度影响

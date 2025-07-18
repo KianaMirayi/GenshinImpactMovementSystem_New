@@ -36,6 +36,8 @@ namespace GenshinImpactMovementSystem
         {
             base.PhysicsUpdate();
 
+            
+
             Float();
         }
 
@@ -45,11 +47,17 @@ namespace GenshinImpactMovementSystem
 
         private void Float()
         {
+            Debug.Log("Float() called");
             /*
              	保证角色在地形表面自然移动，避免悬空或穿模。
              	动态适应不同坡度，提升角色与地形的物理交互体验。
              	结合速度修正和浮空力，兼顾动画与物理效果。
               */
+            if (!(playerMovementStateMachine.currentState is PlayerGroundedState))
+            {
+                return;
+            }
+
             Vector3 capsuleColliderCentterInWorldSpace = playerMovementStateMachine.Player.capsuleColiderUtility.capsuleColliderData.Collider.bounds.center;  // 1. 获取胶囊碰撞体的世界空间中心点
 
             Ray downwardsRayFromCapsuleColliderCenter = new Ray(capsuleColliderCentterInWorldSpace, Vector3.down); // 2. 从碰撞体中心点向下发射一条射线
@@ -69,11 +77,18 @@ namespace GenshinImpactMovementSystem
                 // 7. 计算角色需要浮空的距离（角色底部到地面的距离）
                 float distanceToFloatingPoint = playerMovementStateMachine.Player.capsuleColiderUtility.capsuleColliderData.ColliderCenterInLocalSpace.y * playerMovementStateMachine.Player.transform.localScale.y - hit.distance ;
 
+                if (distanceToFloatingPoint < 0.01f)//**
+                {
+                    return;
+                }
+
                 // 8. 如果距离为0，说明已经贴合地面，无需处理
                 if (distanceToFloatingPoint == 0f)
                 { 
                     return;
                 }
+
+                
 
                 // 9. 计算需要施加的浮空力（考虑当前竖直速度）
                 //slopeData.stepReachForce 一个可调节的浮空力系数，决定角色“贴合地面”时的响应强度。数值越大，角色越快贴合地面，越小则越柔和。
@@ -84,9 +99,10 @@ namespace GenshinImpactMovementSystem
                 Vector3 liftForce = new Vector3(0f, amoutToLift, 0f);
 
                 playerMovementStateMachine.Player.Rigidbody.AddForce(liftForce, ForceMode.VelocityChange);// 10. 给角色刚体施加竖直方向的力，使其浮空或贴合地面
+
             }
 
-
+            
 
         }
 
@@ -129,7 +145,7 @@ namespace GenshinImpactMovementSystem
 
             Vector3 groundColliderCenterInWorldSpace = groundCheckCollider.bounds.center;
 
-            Collider[] overlappedGroundColldiers = Physics.OverlapBox(groundColliderCenterInWorldSpace,groundCheckCollider.bounds.extents,groundCheckCollider.transform.rotation,playerMovementStateMachine.Player.layerData.groundLayer,QueryTriggerInteraction.Ignore);
+            Collider[] overlappedGroundColldiers = Physics.OverlapBox(groundColliderCenterInWorldSpace,playerMovementStateMachine.Player.capsuleColiderUtility.TriggerColliderData.GroundCheckColliderExtends,groundCheckCollider.transform.rotation,playerMovementStateMachine.Player.layerData.groundLayer,QueryTriggerInteraction.Ignore);
 
             return overlappedGroundColldiers.Length > 0;
 
@@ -218,7 +234,11 @@ namespace GenshinImpactMovementSystem
 
         protected virtual void OnJumpStarted(InputAction.CallbackContext context)
         {
+            Debug.Log(" OnJumpStarted");
+
             playerMovementStateMachine.ChangeState(playerMovementStateMachine.JumpingState);
+
+            
         }
 
         protected virtual void OnMove()

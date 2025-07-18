@@ -28,7 +28,15 @@ namespace GenshinImpactMovementSystem
 
 
             capsuleColliderData.Initialize(gameObject);
+
+            OnInitalize();
         }
+
+        protected virtual void OnInitalize()
+        { 
+            
+        }
+
 
         public void CalculateCapsuleColliderDimensions() //根据默认参数和坡度数据，重新计算并设置碰撞体的半径、高度和中心点
         {

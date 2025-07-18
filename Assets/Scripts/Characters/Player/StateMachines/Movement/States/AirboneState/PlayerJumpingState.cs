@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.InputSystem;
 
 namespace GenshinImpactMovementSystem
 {
@@ -145,6 +146,17 @@ namespace GenshinImpactMovementSystem
         {
             
 
+        }
+
+        #endregion
+
+
+
+        #region Input Methods
+
+        protected override void OnMovementCanceld(InputAction.CallbackContext context)
+        {
+            
         }
 
         #endregion

@@ -38,7 +38,7 @@ namespace GenshinImpactMovementSystem
 
 
         public PlayerMovementState(PlayerMovementStateMachine _playerMovementStateMachine)
-        { 
+        {
             playerMovementStateMachine = _playerMovementStateMachine;
 
             movementData = playerMovementStateMachine.Player.Data.GroundedData;
@@ -46,7 +46,11 @@ namespace GenshinImpactMovementSystem
             airboneData = playerMovementStateMachine.Player.Data.AirboneData;
 
             InitializeData();
+
+            SetBaseCameraRecenteringData();
         }
+
+       
 
         private void InitializeData()
         {
@@ -310,6 +314,11 @@ namespace GenshinImpactMovementSystem
         protected virtual void AddInputActionsCallbacks()
         {
             playerMovementStateMachine.Player.Input.PlayerActions.WalkToggle.started += OnWalkToggleStarted;
+
+            playerMovementStateMachine.Player.Input.PlayerActions.Look.started += OnMouseMovementStarted;
+            playerMovementStateMachine.Player.Input.PlayerActions.Movement.performed += OnMovementPerformed;
+
+            playerMovementStateMachine.Player.Input.PlayerActions.Movement.canceled += OnMovementCanceld;
         }
 
         
@@ -317,7 +326,15 @@ namespace GenshinImpactMovementSystem
         protected virtual void RemoveInputActionsCallbacks()
         {
             playerMovementStateMachine.Player.Input.PlayerActions.WalkToggle.started -= OnWalkToggleStarted;
+
+            playerMovementStateMachine.Player.Input.PlayerActions.Look.started -= OnMouseMovementStarted;
+            playerMovementStateMachine.Player.Input.PlayerActions.Movement.performed -= OnMovementPerformed;
+
+            playerMovementStateMachine.Player.Input.PlayerActions.Movement.canceled -= OnMovementCanceld;
+
         }
+
+        
 
         protected void DecelerateHorizontally()
         { 
@@ -372,6 +389,83 @@ namespace GenshinImpactMovementSystem
 
         }
 
+        protected void UpdataCameraRecenteringState(Vector2 movementInput)
+        {
+            if (movementInput == Vector2.zero)
+            {
+                return;
+            }
+
+            if (movementInput == Vector2.up)
+            { 
+                DisableCameraRecentering();
+
+                return;
+            }
+
+            float cameraVerticalAngle = playerMovementStateMachine.Player.MainCameraTransform.eulerAngles.x;  //x是相机垂直角度
+
+            if (cameraVerticalAngle >= 270f)
+            {
+                cameraVerticalAngle -= 360f;
+            }
+
+
+            cameraVerticalAngle = Mathf.Abs(cameraVerticalAngle);
+
+
+            if (movementInput == Vector2.down)
+            {
+                SetCameraRenteringState(cameraVerticalAngle, playerMovementStateMachine.ReusableData.BackwardsCameraRenteringData);
+
+                return;
+            }
+
+            SetCameraRenteringState(cameraVerticalAngle, playerMovementStateMachine.ReusableData.SidewaysCameraRenteringData);
+        }
+
+        protected void SetCameraRenteringState(float cameraVerticalAngle, List<PlayerCameraRecenteringData> cameraRenteringData)
+        {
+            foreach (PlayerCameraRecenteringData recenteringData in cameraRenteringData)
+            {
+                if (!recenteringData.IsWithInRange(cameraVerticalAngle))
+                {
+                    continue;
+                }
+
+                EnableCameraRecentering(recenteringData.WaitTime, recenteringData.RecenteringTime);
+
+                return;
+
+            }
+
+            DisableCameraRecentering();
+        }
+
+        protected void EnableCameraRecentering(float waitTime = -1f, float recenteringTime = -1f)
+        {
+            float movemntSpeed = GetMovementSpeed();
+
+            if (movemntSpeed == 0f)  //避免下面的EnableRecentering方法中除以0
+            {
+                movemntSpeed = movementData.baseSpeed;
+            }
+
+            playerMovementStateMachine.Player.cameraUtility.EnableRecentering(waitTime, recenteringTime, movementData.baseSpeed, movemntSpeed);
+        }
+
+        protected void DisableCameraRecentering()
+        { 
+            playerMovementStateMachine.Player.cameraUtility.DisableRecentering();
+        }
+
+        protected void SetBaseCameraRecenteringData()
+        {
+            playerMovementStateMachine.ReusableData.BackwardsCameraRenteringData = movementData.BackwardsCameraRenteringData;
+
+            playerMovementStateMachine.ReusableData.SidewaysCameraRenteringData = movementData.SidewaysCameraRenteringData;
+        }
+
         #endregion
 
 
@@ -380,6 +474,22 @@ namespace GenshinImpactMovementSystem
         protected virtual void OnWalkToggleStarted(InputAction.CallbackContext context)
         {
             playerMovementStateMachine.ReusableData.shouldWalk = !playerMovementStateMachine.ReusableData.shouldWalk;
+        }
+
+
+        protected virtual void OnMovementCanceld(InputAction.CallbackContext context)  
+        {
+            DisableCameraRecentering();
+        }
+
+        private void OnMovementPerformed(InputAction.CallbackContext context)
+        {
+            UpdataCameraRecenteringState(context.ReadValue<Vector2>());
+        }
+
+        private void OnMouseMovementStarted(InputAction.CallbackContext context)
+        {
+            UpdataCameraRecenteringState(playerMovementStateMachine.ReusableData.movementInput);
         }
 
         #endregion

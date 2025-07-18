@@ -25,9 +25,10 @@ namespace GenshinImpactMovementSystem
         #region
         public override void Enter()
         {
+            playerMovementStateMachine.ReusableData.movementSpeedModifier = sprintData.sprintSpeedModifier;
+
             base.Enter();
 
-            playerMovementStateMachine.ReusableData.movementSpeedModifier = sprintData.sprintSpeedModifier;
 
             playerMovementStateMachine.ReusableData.currentJumpForce = airboneData.JumpData.StrongForce;
 
@@ -127,10 +128,19 @@ namespace GenshinImpactMovementSystem
 
         }
 
+        protected override void OnMovementCanceld(InputAction.CallbackContext context)
+        {
+            playerMovementStateMachine.ChangeState(playerMovementStateMachine.HardStoppingState);
+
+            base.OnMovementCanceld(context);
+        }
+
+        /*
         protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
             playerMovementStateMachine.ChangeState(playerMovementStateMachine.HardStoppingState);
         }
+        */
 
         protected override void OnJumpStarted(InputAction.CallbackContext context)
         {

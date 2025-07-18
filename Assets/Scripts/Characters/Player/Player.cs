@@ -24,6 +24,9 @@ namespace GenshinImpactMovementSystem
 
         [field: SerializeField] public PlayerLayerData layerData { get; private set; }
 
+        [field: Header("Camera")]
+        [field : SerializeField] public PlayerCameraUtility cameraUtility { get; private set; }
+
 
 
 
@@ -39,6 +42,8 @@ namespace GenshinImpactMovementSystem
             capsuleColiderUtility.Initialize(gameObject);
 
             capsuleColiderUtility.CalculateCapsuleColliderDimensions();
+
+            cameraUtility.Initialize();
 
             Input = GetComponent<PlayerInput>();
 

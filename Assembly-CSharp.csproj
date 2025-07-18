@@ -64,14 +64,17 @@
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Stopping\PlayerMediumStoppingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\PlayerStateReusableData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Airbone\PlayerAirboneData.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\Data\Camera\PlayerCameraRecenteringData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\Moving\PlayerWalkData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\Landing\PlayerRollData.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\PlayerIdleData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Stopping\PlayerHardStoppingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\Stopping\PlayerStopData.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\StateMachines\Movement\States\GroundedStates\Landing\PlayerRollingState.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\Grounded\PlayerDashData.cs" />
     <Compile Include="Assets\Scripts\Data\Colider\SlopeData.cs" />
+    <Compile Include="Assets\Scripts\Characters\Player\Utiliies\Cameras\PlayerCameraUtility.cs" />
     <Compile Include="Assets\InputActions\Characters\Player\PlayerInputActions.cs" />
     <Compile Include="Assets\Scripts\Characters\Player\Data\States\PlayerRotationData.cs" />
     <Compile Include="Assets\Scripts\StateMachine\IState.cs" />

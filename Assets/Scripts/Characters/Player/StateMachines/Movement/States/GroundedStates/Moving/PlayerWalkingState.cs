@@ -8,20 +8,33 @@ namespace GenshinImpactMovementSystem
 {
     public class PlayerWalkingState : PlayerMovingState
     {
+        private PlayerWalkData walkData;
+
         public PlayerWalkingState(PlayerMovementStateMachine _playerMovementStateMachine) : base(_playerMovementStateMachine)
         {
+            walkData = movementData.WalkData;
         }
 
 
         #region IState Methods
         public override void Enter()
         {
+            playerMovementStateMachine.ReusableData.movementSpeedModifier = movementData.WalkData.speedModifier;
+
+            playerMovementStateMachine.ReusableData.BackwardsCameraRenteringData = walkData.BackwardsCameraRenteringData;
+
             base.Enter();
 
-            playerMovementStateMachine.ReusableData.movementSpeedModifier = movementData.WalkData.speedModifier ;
 
             playerMovementStateMachine.ReusableData.currentJumpForce = airboneData.JumpData.WeakForce;
 
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            SetBaseCameraRecenteringData();
         }
 
 
@@ -63,12 +76,23 @@ namespace GenshinImpactMovementSystem
 
         }
 
+        protected override void OnMovementCanceld(InputAction.CallbackContext context)
+        {
+            playerMovementStateMachine.ChangeState(playerMovementStateMachine.LightStoppingState);
+
+            base.OnMovementCanceld(context);
+        }
+
+        /*
         protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
-            
+
 
             playerMovementStateMachine.ChangeState(playerMovementStateMachine.LightStoppingState);
+
+            base.OnMovementCanceld(context);
         }
+        */
 
         /*
         protected void OnMovementCanceled(InputAction.CallbackContext context)
@@ -79,7 +103,7 @@ namespace GenshinImpactMovementSystem
 
         #endregion
 
-        
+
 
     }
 

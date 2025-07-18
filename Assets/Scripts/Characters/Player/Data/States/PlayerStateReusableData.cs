@@ -23,6 +23,10 @@ namespace GenshinImpactMovementSystem
 
         public bool shouldSprint { get; set; }
 
+         public List<PlayerCameraRecenteringData> BackwardsCameraRenteringData { get; set; }
+         public List<PlayerCameraRecenteringData> SidewaysCameraRenteringData { get; set; }
+
+
 
         //角色朝向控制。每次移动或旋转时，目标角度会被更新，角色会平滑旋转到该角度
         private Vector3 currentTargetRotation;

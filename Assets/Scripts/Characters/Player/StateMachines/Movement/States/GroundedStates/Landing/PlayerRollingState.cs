@@ -24,9 +24,10 @@ namespace GenshinImpactMovementSystem
 
         public override void Enter()
         {
+            playerMovementStateMachine.ReusableData.movementSpeedModifier = rollData.RollSpeedModifier;
+
             base.Enter();
 
-            playerMovementStateMachine.ReusableData.movementSpeedModifier = rollData.RollSpeedModifier;
 
             playerMovementStateMachine.ReusableData.shouldSprint = false; //翻滚结束之后不允许快速奔跑
         }

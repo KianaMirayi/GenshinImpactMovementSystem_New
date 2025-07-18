@@ -17,11 +17,12 @@ namespace GenshinImpactMovementSystem
 
         public override void Enter()
         {
+            playerMovementStateMachine.ReusableData.movementSpeedModifier = 0f;
+
             base.Enter();
 
             playerMovementStateMachine.Player.Input.PlayerActions.Movement.Disable();  //进入硬着陆状态时不能移动
 
-            playerMovementStateMachine.ReusableData.movementSpeedModifier = 0f;
 
             ResetVelocity();
         }
@@ -82,10 +83,7 @@ namespace GenshinImpactMovementSystem
 
         #region Input Methods
 
-        protected override void OnMovementCanceled(InputAction.CallbackContext context)
-        {
-            base.OnMovementCanceled(context);
-        }
+        
 
 
         private void OnMovementStared(InputAction.CallbackContext context)

@@ -26,6 +26,8 @@ namespace GenshinImpactMovementSystem
             base.Enter();
 
             UpdateShouldSprint();
+
+            UpdataCameraRecenteringState(playerMovementStateMachine.ReusableData.movementInput);
         }
 
         
@@ -92,7 +94,14 @@ namespace GenshinImpactMovementSystem
         {
             float slopeSpeedModifier = movementData.SlopeSpeedAngles.Evaluate(angle);
 
-            playerMovementStateMachine.ReusableData.movementOnSlopeSpeedModifier = slopeSpeedModifier;
+            if (playerMovementStateMachine.ReusableData.movementOnSlopeSpeedModifier != slopeSpeedModifier)
+            { 
+                playerMovementStateMachine.ReusableData.movementOnSlopeSpeedModifier = slopeSpeedModifier;
+
+                UpdataCameraRecenteringState(playerMovementStateMachine.ReusableData.movementInput);
+                
+            }
+
 
             return slopeSpeedModifier;
 
@@ -135,7 +144,7 @@ namespace GenshinImpactMovementSystem
         {
             base.AddInputActionsCallbacks();
 
-            playerMovementStateMachine.Player.Input.PlayerActions.Movement.canceled += OnMovementCanceled;
+            //playerMovementStateMachine.Player.Input.PlayerActions.Movement.canceled += OnMovementCanceled;
 
             playerMovementStateMachine.Player.Input.PlayerActions.Dash.started += OnDashStarted;
 
@@ -148,7 +157,7 @@ namespace GenshinImpactMovementSystem
         {
             base.RemoveInputActionsCallbacks();
 
-            playerMovementStateMachine.Player.Input.PlayerActions.Movement.canceled -= OnMovementCanceled;
+            //playerMovementStateMachine.Player.Input.PlayerActions.Movement.canceled -= OnMovementCanceled;
 
             playerMovementStateMachine.Player.Input.PlayerActions.Dash.started -= OnDashStarted;
 
@@ -195,10 +204,12 @@ namespace GenshinImpactMovementSystem
 
         }
 
+        /*
         protected virtual void OnMovementCanceled(InputAction.CallbackContext context)
         {
             playerMovementStateMachine.ChangeState(playerMovementStateMachine.IdlingState);
         }
+        */
 
         protected virtual void OnDashStarted(InputAction.CallbackContext context)
         {

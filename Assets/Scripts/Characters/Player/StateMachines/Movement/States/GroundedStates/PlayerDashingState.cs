@@ -27,9 +27,10 @@ namespace GenshinImpactMovementSystem
         #region IState Methods
         public override void Enter() //设置速度修正、旋转参数
         {
+            playerMovementStateMachine.ReusableData.movementSpeedModifier = dashData.DashSpeedModifier;
+
             base.Enter();
 
-            playerMovementStateMachine.ReusableData.movementSpeedModifier = dashData.DashSpeedModifier;
 
             playerMovementStateMachine.ReusableData.currentJumpForce = airboneData.JumpData.StrongForce;
 
@@ -134,11 +135,12 @@ namespace GenshinImpactMovementSystem
             
         }
 
+        /*
         protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
             
         }
-
+        */
         private void OnMovementPerformed(InputAction.CallbackContext context)
         {
             shouldKeepRotating = true;

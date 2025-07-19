@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 namespace GenshinImpactMovementSystem
 {
@@ -27,6 +28,8 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.ReusableData.movementSpeedModifier = rollData.RollSpeedModifier;
 
             base.Enter();
+
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.RollParamaterHash);
 
 
             playerMovementStateMachine.ReusableData.shouldSprint = false; //翻滚结束之后不允许快速奔跑
@@ -54,6 +57,13 @@ namespace GenshinImpactMovementSystem
             }
 
             OnMove();
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.RollParamaterHash);
         }
 
 

@@ -31,6 +31,7 @@ namespace GenshinImpactMovementSystem
 
             base.Enter();
 
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.DashParamaterHash);
 
             playerMovementStateMachine.ReusableData.currentJumpForce = airboneData.JumpData.StrongForce;
 
@@ -62,6 +63,8 @@ namespace GenshinImpactMovementSystem
         public override void Exit()
         {
             base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.DashParamaterHash);
 
             SetBaseRotationData();
         }

@@ -25,6 +25,8 @@ namespace GenshinImpactMovementSystem
 
             base.Enter();
 
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.WalkParamaterHash);
+
 
             playerMovementStateMachine.ReusableData.currentJumpForce = airboneData.JumpData.WeakForce;
 
@@ -33,6 +35,8 @@ namespace GenshinImpactMovementSystem
         public override void Exit()
         {
             base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.WalkParamaterHash);
 
             SetBaseCameraRecenteringData();
         }

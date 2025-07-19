@@ -12,7 +12,21 @@ namespace GenshinImpactMovementSystem
             
         }
 
-        
+        public override void Enter()
+        {
+            base.Enter();
+
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.LandingParamaterHash);
+        }
+
+
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.LandingParamaterHash);
+        }
     }
 
 

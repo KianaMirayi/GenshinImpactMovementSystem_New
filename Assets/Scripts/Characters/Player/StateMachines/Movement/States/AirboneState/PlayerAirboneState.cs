@@ -16,7 +16,16 @@ namespace GenshinImpactMovementSystem
         {
             base.Enter();
 
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.AirboneParamaterHash);
+
             ResetSprintState();
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.AirboneParamaterHash);
         }
 
         #endregion

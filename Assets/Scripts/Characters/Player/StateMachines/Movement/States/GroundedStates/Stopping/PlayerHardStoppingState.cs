@@ -15,10 +15,19 @@ namespace GenshinImpactMovementSystem
         {
             base.Enter();
 
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.HardStopParamaterHash);
+
             playerMovementStateMachine.ReusableData.movementDecelerationForce = movementData.StopData.hardDecelerationForce;
 
             playerMovementStateMachine.ReusableData.currentJumpForce = airboneData.JumpData.StrongForce;
 
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.HardStopParamaterHash);
         }
 
         #endregion

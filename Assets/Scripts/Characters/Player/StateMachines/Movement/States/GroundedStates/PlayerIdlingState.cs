@@ -25,6 +25,8 @@ namespace GenshinImpactMovementSystem
 
             base.Enter();
 
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.IdleParamaterHash);
+
 
             ResetVelocity();
 
@@ -54,6 +56,13 @@ namespace GenshinImpactMovementSystem
 
             ResetVelocity();
 
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.IdleParamaterHash);
         }
         
 

@@ -14,10 +14,19 @@ namespace GenshinImpactMovementSystem
         {
             base.Enter();
 
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.MediumStopParamaterHash);
+
             playerMovementStateMachine.ReusableData.movementDecelerationForce = movementData.StopData.mediunDecelerationForce;
 
             playerMovementStateMachine.ReusableData.currentJumpForce = airboneData.JumpData.MediumForce;
 
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.MediumStopParamaterHash);
         }
     }
 }

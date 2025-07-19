@@ -21,6 +21,8 @@ namespace GenshinImpactMovementSystem
 
             base.Enter();
 
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.HardLandParamaterHash);
+
             playerMovementStateMachine.Player.Input.PlayerActions.Movement.Disable();  //进入硬着陆状态时不能移动
 
 
@@ -30,6 +32,8 @@ namespace GenshinImpactMovementSystem
         public override void Exit()
         {
             base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.HardLandParamaterHash);
 
             playerMovementStateMachine.Player.Input.PlayerActions.Movement.Enable();  //推出硬着陆状态时可以移动
         }

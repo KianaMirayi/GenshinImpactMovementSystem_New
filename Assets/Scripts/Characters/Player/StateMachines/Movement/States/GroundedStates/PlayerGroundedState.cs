@@ -25,6 +25,8 @@ namespace GenshinImpactMovementSystem
         {
             base.Enter();
 
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.GroundedParamaterHash);
+
             UpdateShouldSprint();
 
             UpdataCameraRecenteringState(playerMovementStateMachine.ReusableData.movementInput);
@@ -39,6 +41,13 @@ namespace GenshinImpactMovementSystem
             
 
             Float();
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.GroundedParamaterHash);
         }
 
         #endregion
@@ -77,10 +86,11 @@ namespace GenshinImpactMovementSystem
                 // 7. 计算角色需要浮空的距离（角色底部到地面的距离）
                 float distanceToFloatingPoint = playerMovementStateMachine.Player.capsuleColiderUtility.capsuleColliderData.ColliderCenterInLocalSpace.y * playerMovementStateMachine.Player.transform.localScale.y - hit.distance ;
 
-                if (distanceToFloatingPoint < 0.01f)//**
+                if (distanceToFloatingPoint < 0.0001f)// 防止游戏初始化时角色开始抽搐(因为碰撞体嵌到地面被挤出去又掉下来)**
                 {
                     return;
                 }
+                
 
                 // 8. 如果距离为0，说明已经贴合地面，无需处理
                 if (distanceToFloatingPoint == 0f)

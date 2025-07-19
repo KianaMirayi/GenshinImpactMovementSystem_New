@@ -23,6 +23,8 @@ namespace GenshinImpactMovementSystem
         {
             base.Enter();
 
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.FallParamaterHash);
+
             playerPositionOnEnter = playerMovementStateMachine.Player.transform.position;
 
             playerMovementStateMachine.ReusableData.movementSpeedModifier = 0f;
@@ -37,6 +39,13 @@ namespace GenshinImpactMovementSystem
             LimitVerticalVelocity();
             
 
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.FallParamaterHash);
         }
 
 

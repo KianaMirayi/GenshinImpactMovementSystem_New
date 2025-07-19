@@ -18,6 +18,7 @@ namespace GenshinImpactMovementSystem
 
             base.Enter();
 
+            
 
             playerMovementStateMachine.ReusableData.currentJumpForce = airboneData.JumpData.StationaryForce;
 
@@ -57,6 +58,13 @@ namespace GenshinImpactMovementSystem
         }
 
         #endregion
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            
+        }
 
         #region Input Methods
         

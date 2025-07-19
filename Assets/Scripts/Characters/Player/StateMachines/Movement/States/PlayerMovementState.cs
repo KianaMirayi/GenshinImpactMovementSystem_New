@@ -473,6 +473,17 @@ namespace GenshinImpactMovementSystem
             playerMovementStateMachine.ReusableData.SidewaysCameraRenteringData = movementData.SidewaysCameraRenteringData;
         }
 
+
+        protected void StartAnimation(int animationHash)
+        {
+            playerMovementStateMachine.Player.Animator.SetBool(animationHash, true);
+        }
+
+        protected void StopAnimation(int animaitonHash)
+        {
+            playerMovementStateMachine.Player.Animator.SetBool(animaitonHash,false);
+        }
+
         #endregion
 
 

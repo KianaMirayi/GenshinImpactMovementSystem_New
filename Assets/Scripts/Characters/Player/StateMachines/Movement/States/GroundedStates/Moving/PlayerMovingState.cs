@@ -9,5 +9,19 @@ namespace GenshinImpactMovementSystem
         public PlayerMovingState(PlayerMovementStateMachine _playerMovementStateMachine) : base(_playerMovementStateMachine)
         {
         }
+
+        public override void Enter()
+        {
+            base.Enter();
+
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.MovingParamaterHash);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.MovingParamaterHash);
+        }
     }
 }

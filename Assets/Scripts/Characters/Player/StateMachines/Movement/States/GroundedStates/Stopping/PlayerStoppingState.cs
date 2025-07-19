@@ -21,6 +21,8 @@ namespace GenshinImpactMovementSystem
 
             base.Enter();
 
+            StartAnimation(playerMovementStateMachine.Player.AnimationData.StoppingParamaterHash);
+
         }
 
         public override void PhysicsUpdate()
@@ -36,6 +38,13 @@ namespace GenshinImpactMovementSystem
 
             DecelerateHorizontally();
 
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            StopAnimation(playerMovementStateMachine.Player.AnimationData.StoppingParamaterHash);
         }
 
 

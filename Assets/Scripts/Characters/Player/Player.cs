@@ -14,6 +14,8 @@ namespace GenshinImpactMovementSystem
 
         public Rigidbody Rigidbody { get; private set; }
 
+        public Animator Animator { get; private set; }
+
         public Transform MainCameraTransform { get; private set; }  //主摄像机的Transform组件
 
         [field: Header("Reference")]
@@ -21,6 +23,9 @@ namespace GenshinImpactMovementSystem
 
         [field: Header("Collisions")]
         [field: SerializeField] public PlayerCapsuleColliderUtility capsuleColiderUtility { get; private set; }
+
+        [field: Header("Animations")]
+        [field :SerializeField] public PlayerAnimationData AnimationData { get; private set; }
 
         [field: SerializeField] public PlayerLayerData layerData { get; private set; }
 
@@ -39,21 +44,26 @@ namespace GenshinImpactMovementSystem
 
         private void Awake()
         {
-            capsuleColiderUtility.Initialize(gameObject);
+            Input = GetComponent<PlayerInput>();
+            Rigidbody = GetComponent<Rigidbody>();
+            Animator = GetComponentInChildren<Animator>();
 
+
+
+            capsuleColiderUtility.Initialize(gameObject);
             capsuleColiderUtility.CalculateCapsuleColliderDimensions();
 
             cameraUtility.Initialize();
 
-            Input = GetComponent<PlayerInput>();
+            AnimationData.Initialize();
+
+            MainCameraTransform = Camera.main.transform;
 
             movementStateMachine = new PlayerMovementStateMachine(this);  //实例化玩家的移动状态机
 
-            Rigidbody = GetComponent<Rigidbody>();
 
                skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
 
-            MainCameraTransform = Camera.main.transform;
 
             
 
@@ -101,6 +111,20 @@ namespace GenshinImpactMovementSystem
         }
 
 
-       
+        public void OnMovementStateAnimationEnterEvent()
+        { 
+            movementStateMachine.OnAnimationEnterEvent();
+        }
+
+        public void OnMovementStateAnimationExitrEvent()
+        {
+            movementStateMachine.OnAnimationExitEvent();
+        }
+
+        public void OnMovementStateAnimationTransitionEvent()
+        {
+            movementStateMachine.OnAnimationTransitaionEvent();
+        }
+
     }
 }
